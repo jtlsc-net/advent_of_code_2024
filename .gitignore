@@ -1,0 +1,6 @@
+.vs/
+*.sln
+*.vcxproj*
+aoc_2024/
+template.txt
+x64/
