@@ -41,7 +41,7 @@ std::string second_solver(std::string path) {
 	auto similarity_with_cache = [&num_to_count, &right](int outacc, int l) {
 		if (num_to_count.contains(l)) return outacc + l * num_to_count[l];
 		else {
-			int sum = std::count(right.begin(), right.end(), l);
+			int sum = static_cast<int>(std::count(right.begin(), right.end(), l));
 			num_to_count[l] = sum;
 			return outacc + l * sum;
 		}

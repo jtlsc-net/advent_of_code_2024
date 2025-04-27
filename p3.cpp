@@ -85,7 +85,7 @@ vector<pair<string, vector<string>>> single_line_parser(const string& in) {
 		for (const auto& token : tokens) {
 			if (in.size() - i < token.size()) continue;
 			if (in.substr(i, token.size()) == token) {
-				int token_length = token.size();
+				int token_length = static_cast<int>(token.size());
 				string unparsed_paren_pair = parens(in.substr(i + token.size(), in.size()));
 				if (unparsed_paren_pair == "") continue;
 				vector<string> innards = parse_innards(unparsed_paren_pair);

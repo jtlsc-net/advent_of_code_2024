@@ -11,6 +11,7 @@
 #include "p7.h"
 #include "p8.h"
 #include "p9.h"
+#include "p10.h"
 
 
 void solve_problem(Problem *problem, bool first) {
@@ -80,6 +81,11 @@ Problem* create_problem(const std::string& input) {
 	}
 	else if (input == "9") {
 		P9* ptr = new P9();
+		gen_txt(ptr, input);
+		return ptr;
+	}
+	else if (input == "10") {
+		P10* ptr = new P10();
 		gen_txt(ptr, input);
 		return ptr;
 	}

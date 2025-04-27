@@ -124,9 +124,9 @@ vector<pair<int, int>> find_line_from_two_points_bounds_checked(pair<int, int> i
 	for (int x = 0; x < w; ++x) {
 		double y = eq(x, m, b);
 		if (is_whole(y, 0.000000001)) {
-			if (bound_check(pair<int, int>(x, round(y)))) {
+			if (bound_check(pair<int, int>(x, static_cast<int>(round(y))))) {
 				//print(to_string(x) + "," + to_string(y));
-				out.push_back(pair<int, int>(x, round(y)));
+				out.push_back(pair<int, int>(x, static_cast<int>(round(y))));
 			}
 		}
 	}
