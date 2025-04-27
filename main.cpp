@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <memory>
 
 #include "problem.h"
@@ -12,6 +13,7 @@
 #include "p8.h"
 #include "p9.h"
 #include "p10.h"
+#include "p11.h"
 
 
 void solve_problem(Problem *problem, bool first) {
@@ -32,68 +34,6 @@ void solve_problem(Problem *problem, bool first) {
 	}
 }
 
-Problem* create_problem(const std::string& input) {
-	auto gen_txt = [](Problem* ptr, std::string num) {
-		ptr->path = num + ".txt";
-		ptr->test_path = num + "_test.txt";
-		ptr->test_second_path = num + "_second_test.txt";
-		};
-
-	if (input == "1") {
-		P1* ptr = new P1();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "2") {
-		P2* ptr = new P2();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "3") {
-		P3* ptr = new P3();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "4") {
-		P4* ptr = new P4();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "5") {
-		P5* ptr = new P5();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "6") {
-		P6* ptr = new P6();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "7") {
-		P7* ptr = new P7();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "8") {
-		P8* ptr = new P8();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "9") {
-		P9* ptr = new P9();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else if (input == "10") {
-		P10* ptr = new P10();
-		gen_txt(ptr, input);
-		return ptr;
-	}
-	else {
-		return nullptr;
-	}
-}
-
 bool query_first() {
 	std::string input;
 	std::cout << "First? y/n: ";
@@ -106,11 +46,45 @@ bool query_first() {
 	}
 }
 
+void gen_txt(Problem* ptr, std::string num) {
+	ptr->path = num + ".txt";
+	ptr->test_path = num + "_test.txt";
+	ptr->test_second_path = num + "_second_test.txt";
+}
+
+bool validate_input(const std::string& input, const std::map<std::string, Problem* (*)()> m) {
+	for (const auto& keyval : m) {
+		if (input == keyval.first) return true;
+	}
+	return false;
+}
+
 int main() {
 	std::string input;
 	std::cout << "problem?: ";
 	std::cin >> input;
-	Problem* p_pointer = create_problem(input);
+
+	std::map<std::string, Problem* (*)()> p_map{
+		{"1", []()->Problem* { return new P1(); }}	,
+		{ "2", []()->Problem* { return new P2(); } },
+		{ "3", []()->Problem* { return new P3(); } },
+		{ "4", []()->Problem* { return new P4(); } },
+		{ "5", []()->Problem* { return new P5(); } },
+		{ "6", []()->Problem* { return new P6(); } },
+		{ "7", []()->Problem* { return new P7(); } },
+		{ "8", []()->Problem* { return new P8(); } },
+		{ "9", []()->Problem* { return new P9(); } },
+		{ "10", []()->Problem* { return new P10(); } },
+		{ "11", []()->Problem* { return new P11(); } }
+	};
+
+	if (!validate_input(input, p_map)) {
+		std::cout << "invalid input" << std::endl;
+		return 1;
+	}
+
+	Problem* p_pointer = p_map[input]();
+	gen_txt(p_pointer, input);
 	if (p_pointer) {
 		if (query_first()) {
 			solve_problem(p_pointer, true);
